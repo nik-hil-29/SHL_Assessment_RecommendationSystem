@@ -4,14 +4,30 @@ import logging
 from typing import List, Dict, Any, Optional, Tuple
 import pandas as pd
 from IPython.display import display, HTML
-import chromadb
 from langchain_core.documents import Document
 import google.generativeai as genai
 from dotenv import load_dotenv
 load_dotenv()
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
+# Attempt to use a compatible SQLite version
+try:
+    import sqlite3
+    logger.info(f"Current SQLite version: {sqlite3.sqlite_version}")
+    
+    # Check SQLite version and attempt to upgrade
+    if sqlite3.sqlite_version_info < (3, 35, 0):
+        try:
+            # Try to use pysqlite3
+            import pysqlite3
+            sys.modules['sqlite3'] = pysqlite3
+            logger.info("Successfully upgraded SQLite using pysqlite3")
+        except ImportError:
+            logger.warning("Could not upgrade SQLite. Using system SQLite.")
+except Exception as e:
+    logger.error(f"Error checking SQLite version: {e}")
+
+# Now import ChromaDB
+import chromadb
 # Get the API key from the environment and ensure it's a string
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 if not GOOGLE_API_KEY:
