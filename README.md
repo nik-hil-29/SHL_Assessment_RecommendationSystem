@@ -1,7 +1,5 @@
 # SHL Assessment RecommendationSystem
 
-
-
 ## Overview
 
 The SHL Assessment Recommendation System is an intelligent AI-powered tool designed to help hiring managers and recruiters find the most appropriate assessments for their specific job requirements. Leveraging advanced natural language processing and vector search technologies, the system provides tailored recommendations from SHL's extensive assessment catalog.
@@ -15,7 +13,9 @@ The SHL Assessment Recommendation System is an intelligent AI-powered tool desig
 - 🌐 **Web Interface**: Includes both API and Streamlit web application for easy interaction
 
 ## Technology Stack
-
+- **Data Source**-
+  - AgentQL(LLM based crawling agent)
+  - Playwright(headless)
 - **Backend**: 
   - FastAPI
   - Python
@@ -105,6 +105,7 @@ The system includes comprehensive evaluation scripts:
 Metrics include:
 - Mean Recall@K
 - Mean Average Precision@K
+The evaluation results can be seen in evaluation module
 
 ## Project Structure
 
