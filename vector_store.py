@@ -9,7 +9,9 @@ from langchain_core.documents import Document
 import google.generativeai as genai
 from dotenv import load_dotenv
 load_dotenv()
-
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 # Get the API key from the environment and ensure it's a string
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 if not GOOGLE_API_KEY:
