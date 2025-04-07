@@ -9,7 +9,8 @@ pandas
 numpy
 
 # Vector storage and embedding
-chromadb
+chromadb==0.4.22
+pysqlite3-binary
 
 # LLM integration
 google-generativeai
