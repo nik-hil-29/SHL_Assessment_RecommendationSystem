@@ -2,20 +2,54 @@ import streamlit as st
 import pandas as pd
 import requests
 import os
+import subprocess
+import time
+import threading
+import sys
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
 
+# Function to start API server in a separate thread
+def start_api_server():
+    try:
+        # Determine the correct path to api_server.py
+        api_server_path = os.path.join(os.path.dirname(__file__), 'api_server.py')
+        
+        # Start the API server as a subprocess
+        api_process = subprocess.Popen([sys.executable, api_server_path])
+        
+        # Wait a moment to ensure the server starts
+        time.sleep(5)
+        
+        return api_process
+    except Exception as e:
+        st.error(f"Failed to start API server: {e}")
+        return None
+
+# Global variable to track API server process
+api_server_process = None
+
+# Ensure API server is started before Streamlit app renders
+def ensure_api_server():
+    global api_server_process
+    if api_server_process is None:
+        api_server_process = start_api_server()
+
 # Get API URL from environment or use default
 API_URL = os.getenv("API_URL", "http://localhost:8000")
 
+# Configure Streamlit page
 st.set_page_config(
     page_title="SHL Assessment Recommender",
     page_icon="📋",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# Ensure API server is running
+ensure_api_server()
 
 # App title and description
 st.title("SHL Assessment Recommendation System")
@@ -106,8 +140,9 @@ if submit_button and query.strip():
             else:
                 st.error(f"Error: {response.status_code} - {response.text}")
                 
-        except Exception as e:
-            st.error(f"An error occurred: {str(e)}")
+        except requests.exceptions.RequestException as e:
+            st.error(f"API Connection Error: {e}")
+            st.info("Ensure the API server is running and accessible.")
 else:
     if submit_button:
         st.warning("Please enter a query to get recommendations.")
@@ -117,3 +152,13 @@ else:
 # Footer
 st.markdown("---")
 st.markdown("Powered by AI and natural language processing")
+
+# Cleanup API server process when Streamlit app closes
+def cleanup():
+    global api_server_process
+    if api_server_process:
+        api_server_process.terminate()
+
+# Register cleanup function
+import atexit
+atexit.register(cleanup)
