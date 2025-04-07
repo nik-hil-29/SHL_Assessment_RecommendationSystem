@@ -7,6 +7,7 @@ from IPython.display import display, HTML
 from langchain_core.documents import Document
 import google.generativeai as genai
 from dotenv import load_dotenv
+import sys
 load_dotenv()
 
 
