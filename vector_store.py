@@ -10,13 +10,13 @@ from dotenv import load_dotenv
 import sys
 load_dotenv()
 
-
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
 # Attempt to use a compatible SQLite version
 try:
     import sqlite3
@@ -36,13 +36,11 @@ except Exception as e:
 
 # Now import ChromaDB
 import chromadb
+
 # Get the API key from the environment and ensure it's a string
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 if not GOOGLE_API_KEY:
     raise Exception("GOOGLE_API_KEY not found in environment variables. Please check your .env file.")
-
-
-
 
 class AssessmentVectorStore:
     """
@@ -82,12 +80,9 @@ class AssessmentVectorStore:
     def _setup_client(self) -> None:
         """Set up the ChromaDB client."""
         try:
-            # Make sure the directory exists
-            os.makedirs(self.db_directory, exist_ok=True)
-            
-            # Initialize persistent client
-            self.client = chromadb.PersistentClient(path=self.db_directory)
-            logger.info(f"ChromaDB client initialized with persistence directory: {self.db_directory}")
+            # Always use in-memory client for deployment
+            self.client = chromadb.Client()
+            logger.info("Using in-memory ChromaDB client for deployment compatibility")
         except Exception as e:
             logger.error(f"Error initializing ChromaDB client: {e}")
             raise
@@ -209,45 +204,63 @@ class AssessmentVectorStore:
         try:
             logger.info(f"Creating vector database with {len(self.documents)} documents")
             
-            # Process in smaller batches
-            batch_size = 50
+            # Check if we have pre-computed embeddings
+            embeddings_path = "FinalDataSource/precomputed_embeddings.json"
             
-            for i in range(0, len(self.documents), batch_size):
-                batch = self.documents[i:i+batch_size]
-                logger.info(f"Processing batch {i//batch_size + 1}/{(len(self.documents) + batch_size - 1) // batch_size}")
-                
-                # Extract content and metadata
-                ids = [f"doc_{i+j}" for j in range(len(batch))]
-                texts = [doc.page_content for doc in batch]
-                
-                # Prepare metadata (ensure it's in correct format for ChromaDB)
-                metadatas = []
-                for doc in batch:
-                    # Filter out None values and ensure all values are strings
-                    metadata = {}
-                    for k, v in doc.metadata.items():
-                        if v is not None:
-                            metadata[k] = str(v) if not isinstance(v, (int, float, bool)) else v
-                        else:
-                            metadata[k] = ""
-                    metadatas.append(metadata)
-                
-                # Generate embeddings
-                embeddings = self._embed_texts(texts)
-                
-                # Add to collection
+            if os.path.exists(embeddings_path):
+                # Load pre-computed embeddings
+                with open(embeddings_path, 'r') as f:
+                    precomputed_data = json.load(f)
+                    
+                # Add documents to collection using pre-computed embeddings
                 self.collection.add(
-                    ids=ids,
-                    embeddings=embeddings,
-                    documents=texts,
-                    metadatas=metadatas
+                    ids=precomputed_data["ids"],
+                    embeddings=precomputed_data["embeddings"],
+                    documents=precomputed_data["texts"],
+                    metadatas=precomputed_data["metadatas"]
                 )
+                logger.info(f"Added {len(precomputed_data['ids'])} documents using pre-computed embeddings")
+            
+            else:
+                # Process in smaller batches
+                batch_size = 50
                 
-                logger.info(f"Added batch {i//batch_size + 1} to vector database")
-                
-                # Add small delay to avoid rate limits
-                import time
-                time.sleep(0.5)
+                for i in range(0, len(self.documents), batch_size):
+                    batch = self.documents[i:i+batch_size]
+                    logger.info(f"Processing batch {i//batch_size + 1}/{(len(self.documents) + batch_size - 1) // batch_size}")
+                    
+                    # Extract content and metadata
+                    ids = [f"doc_{i+j}" for j in range(len(batch))]
+                    texts = [doc.page_content for doc in batch]
+                    
+                    # Prepare metadata (ensure it's in correct format for ChromaDB)
+                    metadatas = []
+                    for doc in batch:
+                        # Filter out None values and ensure all values are strings
+                        metadata = {}
+                        for k, v in doc.metadata.items():
+                            if v is not None:
+                                metadata[k] = str(v) if not isinstance(v, (int, float, bool)) else v
+                            else:
+                                metadata[k] = ""
+                        metadatas.append(metadata)
+                    
+                    # Generate embeddings
+                    embeddings = self._embed_texts(texts)
+                    
+                    # Add to collection
+                    self.collection.add(
+                        ids=ids,
+                        embeddings=embeddings,
+                        documents=texts,
+                        metadatas=metadatas
+                    )
+                    
+                    logger.info(f"Added batch {i//batch_size + 1} to vector database")
+                    
+                    # Add small delay to avoid rate limits
+                    import time
+                    time.sleep(0.5)
             
             logger.info("Vector database created successfully")
             self.setup_retriever()
