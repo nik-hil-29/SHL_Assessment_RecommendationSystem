@@ -105,7 +105,7 @@ async def get_recommendations(
 # Run server directly when script is executed
 if __name__ == "__main__":
     # Get port from environment or use default
-    port = int(os.getenv("PORT", 8000))
+    port = int(os.getenv("PORT", 8888))
     
     # Run with uvicorn
     uvicorn.run(app, host="0.0.0.0", port=port)
