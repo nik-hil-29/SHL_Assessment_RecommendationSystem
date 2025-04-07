@@ -1,0 +1,71 @@
+[ {
+  "query": "I need a Java programming assessment that can be completed in 30 minutes",
+  "relevant_assessments": [
+    "Java Platform Enterprise Edition 7 (Java EE 7)",
+    "Java 2 Platform Enterprise Edition 1.4 Fundamental",
+    "Core Java (Entry Level) (New)",
+    "Core Java (Advanced Level) (New)",
+    "Java 8 (New)"
+  ]
+},
+{
+  "query": "Looking for a personality assessment for managerial positions",
+  "relevant_assessments": [
+    "OPQ Leadership Report",
+    "OPQ Team Types & Leadership Styles Profile",
+    "Occupational Personality Questionnaire OPQ32r",
+    "OPQ Team Types and Leadership Styles Report",
+    "Manager 7.1 (International)"
+  ]
+},
+{
+  "query": "Need a SQL database test for experienced developers",
+  "relevant_assessments": [
+    "Microsoft SQL Server 2014 Programming",
+    "SQL Server (New)",
+    "SQL Server Analysis Services (SSAS) (New)",
+    "SQL Server Integration Services (SSIS) (New)",
+    "SQL (New)"
+  ]
+},
+  {
+    "query": "Looking for customer service assessment with remote testing support",
+    "relevant_assessments": [
+      "Customer Service - Short Form",
+      "Customer Service - Short Form - UK",
+      "Customer Service with Sales - Short Form",
+      "Contact Center Customer Service + 8.0",
+      "Contact Center Customer Service 8.0",
+      "Entry Level Customer Service 7.1"
+    ]
+  },
+  {
+    "query": "Need an assessment for contact center team leaders or managers",
+    "relevant_assessments": [
+      "Contact Center Manager - Short Form",
+      "Contact Center Team Lead/Coach - Short Form", 
+      "Bank Operations Supervisor - Short Form",
+      "Claims/Operations Supervisor Solution"
+    ]
+  },
+  {
+    "query": "Looking for a comprehensive assessment for call center agents that includes personality testing",
+    "relevant_assessments": [
+      "Contact Centre Agent Solution - UK",
+      "Contact Center Sales & Service + 8.0",
+      "Contact Center Sales & Service 8.0",
+      "Bilingual Spanish Reservation Agent Solution",
+      "Contact Center Customer Service + 8.0"
+    ]
+  },
+  {
+    "query": "Need an assessment for entry-level customer service roles with personality components",
+    "relevant_assessments": [
+      "Entry Level Customer Service 7.1 (Americas)",
+      "Entry Level Customer Service 7.1 (International)",
+      "Entry Level Customer Service 7.1 (South Africa)",
+      "Customer Service - Short Form",
+      "Customer Service with Sales - Short Form"
+    ]
+  }
+]

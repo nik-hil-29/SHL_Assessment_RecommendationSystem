@@ -1,0 +1,341 @@
+[
+  {
+    "query": "I need a Java programming assessment that can be completed in 30 minutes",
+    "relevant": [
+      "Java Platform Enterprise Edition 7 (Java EE 7)",
+      "Java 2 Platform Enterprise Edition 1.4 Fundamental",
+      "Core Java (Entry Level) (New)",
+      "Core Java (Advanced Level) (New)",
+      "Java 8 (New)"
+    ],
+    "recommendations": [
+      "Java 2 Platform Enterprise Edition 1.4 Fundamental",
+      "Java Platform Enterprise Edition 7 (Java EE 7)",
+      "Core Java (Entry Level) (New)",
+      "Core Java (Advanced Level) (New)",
+      "Java 8 (New)",
+      "Java Frameworks (New)",
+      "Java Design Patterns (New)",
+      "Hibernate (New)",
+      "Java Web Services (New)",
+      "Enterprise Java Beans (New)"
+    ],
+    "exact_matches": [
+      [
+        "Java 2 Platform Enterprise Edition 1.4 Fundamental",
+        "Java 2 Platform Enterprise Edition 1.4 Fundamental",
+        "exact"
+      ],
+      [
+        "Java Platform Enterprise Edition 7 (Java EE 7)",
+        "Java Platform Enterprise Edition 7 (Java EE 7)",
+        "exact"
+      ],
+      [
+        "Core Java (Entry Level) (New)",
+        "Core Java (Entry Level) (New)",
+        "exact"
+      ],
+      [
+        "Core Java (Advanced Level) (New)",
+        "Core Java (Entry Level) (New)",
+        "exact"
+      ],
+      [
+        "Java 8 (New)",
+        "Java 8 (New)",
+        "exact"
+      ]
+    ],
+    "near_matches": [],
+    "recall": 1.0
+  },
+  {
+    "query": "Looking for a personality assessment for managerial positions",
+    "relevant": [
+      "OPQ Leadership Report",
+      "OPQ Team Types & Leadership Styles Profile",
+      "Occupational Personality Questionnaire OPQ32r",
+      "OPQ Team Types and Leadership Styles Report",
+      "Manager 7.1 (International)"
+    ],
+    "recommendations": [
+      "Manager - Short Form",
+      "Manager + 7.0 Solution",
+      "Manager 8.0+ JFA",
+      "Manager + 7.1 (International)",
+      "Manager 7.1 (International)",
+      "Manager + 7.1 (Americas)",
+      "Manager 8.0 JFA",
+      "Manager 7.1 (Americas)",
+      "OPQ Team Types & Leadership Styles Profile",
+      "OPQ Leadership Report"
+    ],
+    "exact_matches": [
+      [
+        "Manager + 7.1 (International)",
+        "Manager 7.1 (International)",
+        "exact"
+      ],
+      [
+        "Manager 7.1 (International)",
+        "Manager 7.1 (International)",
+        "exact"
+      ],
+      [
+        "Manager + 7.1 (Americas)",
+        "Manager 7.1 (International)",
+        "exact"
+      ],
+      [
+        "Manager 7.1 (Americas)",
+        "Manager 7.1 (International)",
+        "exact"
+      ],
+      [
+        "OPQ Team Types & Leadership Styles Profile",
+        "OPQ Team Types & Leadership Styles Profile",
+        "exact"
+      ],
+      [
+        "OPQ Leadership Report",
+        "OPQ Leadership Report",
+        "exact"
+      ]
+    ],
+    "near_matches": [],
+    "recall": 1.2
+  },
+  {
+    "query": "Need a SQL database test for experienced developers",
+    "relevant": [
+      "Microsoft SQL Server 2014 Programming",
+      "SQL Server (New)",
+      "SQL Server Analysis Services (SSAS) (New)",
+      "SQL Server Integration Services (SSIS) (New)",
+      "SQL (New)"
+    ],
+    "recommendations": [
+      "Automata - SQL (New)",
+      "Microsoft SQL Server 2014 Programming",
+      "SQL (New)",
+      "SQL Server (New)",
+      "Oracle DBA (Advanced Level) (New)",
+      "Oracle PL/SQL (New)",
+      "SQL Server Reporting Services (SSRS) (New)",
+      "SQL Server Analysis Services (SSAS) (New)",
+      "SQL Server Integration Services (SSIS) (New)",
+      "Oracle DBA (Entry Level) (New)"
+    ],
+    "exact_matches": [
+      [
+        "Microsoft SQL Server 2014 Programming",
+        "Microsoft SQL Server 2014 Programming",
+        "exact"
+      ]
+    ],
+    "near_matches": [
+      [
+        "Automata - SQL (New)",
+        "SQL (New)",
+        "partial"
+      ],
+      [
+        "SQL (New)",
+        "Microsoft SQL Server 2014 Programming",
+        "partial"
+      ],
+      [
+        "SQL Server (New)",
+        "Microsoft SQL Server 2014 Programming",
+        "partial"
+      ],
+      [
+        "Oracle PL/SQL (New)",
+        "SQL (New)",
+        "partial"
+      ],
+      [
+        "SQL Server Reporting Services (SSRS) (New)",
+        "SQL Server (New)",
+        "partial"
+      ],
+      [
+        "SQL Server Analysis Services (SSAS) (New)",
+        "SQL Server (New)",
+        "partial"
+      ],
+      [
+        "SQL Server Integration Services (SSIS) (New)",
+        "SQL Server (New)",
+        "partial"
+      ]
+    ],
+    "recall": 1.6
+  },
+  {
+    "query": "Looking for customer service assessment with remote testing support",
+    "relevant": [
+      "Customer Service - Short Form",
+      "Customer Service - Short Form - UK",
+      "Customer Service with Sales - Short Form",
+      "Contact Center Customer Service + 8.0",
+      "Contact Center Customer Service 8.0",
+      "Entry Level Customer Service 7.1"
+    ],
+    "recommendations": [
+      "Contact Center Customer Service + 8.0",
+      "Contact Center Sales &amp; Service + 8.0",
+      "Guest Services Associate Solution",
+      "Contact Center Team Lead/Coach - Short Form",
+      "Healthcare Call Center Agent Solution",
+      "Contact Centre Agent Solution - UK",
+      "Contact Center Sales &amp; Service 8.0",
+      "Contact Center Customer Service 8.0",
+      "Customer Service Phone Simulation",
+      "Customer Service Phone Solution"
+    ],
+    "exact_matches": [
+      [
+        "Contact Center Customer Service + 8.0",
+        "Contact Center Customer Service + 8.0",
+        "exact"
+      ],
+      [
+        "Contact Center Customer Service 8.0",
+        "Contact Center Customer Service + 8.0",
+        "exact"
+      ]
+    ],
+    "near_matches": [],
+    "recall": 0.3333333333333333
+  },
+  {
+    "query": "Need an assessment for contact center team leaders or managers",
+    "relevant": [
+      "Contact Center Manager - Short Form",
+      "Contact Center Team Lead/Coach - Short Form",
+      "Bank Operations Supervisor - Short Form",
+      "Claims/Operations Supervisor Solution"
+    ],
+    "recommendations": [
+      "Contact Center Team Lead/Coach - Short Form",
+      "Contact Center Manager - Short Form",
+      "Contact Center Customer Service 8.0",
+      "Contact Center Customer Service + 8.0",
+      "Contact Center Sales &amp; Service 8.0",
+      "Contact Center Sales &amp; Service + 8.0",
+      "Contact Center Call Simulation (New)",
+      "Customer Service Phone Solution",
+      "Manager 8.0+ JFA",
+      "OPQ Team Types and Leadership Styles Report"
+    ],
+    "exact_matches": [
+      [
+        "Contact Center Team Lead/Coach - Short Form",
+        "Contact Center Team Lead/Coach - Short Form",
+        "exact"
+      ],
+      [
+        "Contact Center Manager - Short Form",
+        "Contact Center Manager - Short Form",
+        "exact"
+      ]
+    ],
+    "near_matches": [],
+    "recall": 0.5
+  },
+  {
+    "query": "Looking for a comprehensive assessment for call center agents that includes personality testing",
+    "relevant": [
+      "Contact Centre Agent Solution - UK",
+      "Contact Center Sales & Service + 8.0",
+      "Contact Center Sales & Service 8.0",
+      "Bilingual Spanish Reservation Agent Solution",
+      "Contact Center Customer Service + 8.0"
+    ],
+    "recommendations": [
+      "Contact Center Customer Service + 8.0",
+      "Contact Center Sales &amp; Service + 8.0",
+      "Contact Center Customer Service 8.0",
+      "Contact Center Sales &amp; Service 8.0",
+      "Customer Service Phone Solution",
+      "Contact Centre Agent Solution - UK",
+      "Healthcare Call Center Agent Solution",
+      "Sales & Service Phone Solution",
+      "Customer Service with Sales - Short Form",
+      "Customer Service - Short Form"
+    ],
+    "exact_matches": [
+      [
+        "Contact Center Customer Service + 8.0",
+        "Contact Center Customer Service + 8.0",
+        "exact"
+      ],
+      [
+        "Contact Center Customer Service 8.0",
+        "Contact Center Customer Service + 8.0",
+        "exact"
+      ],
+      [
+        "Contact Centre Agent Solution - UK",
+        "Contact Centre Agent Solution - UK",
+        "exact"
+      ]
+    ],
+    "near_matches": [],
+    "recall": 0.6
+  },
+  {
+    "query": "Need an assessment for entry-level customer service roles with personality components",
+    "relevant": [
+      "Entry Level Customer Service 7.1 (Americas)",
+      "Entry Level Customer Service 7.1 (International)",
+      "Entry Level Customer Service 7.1 (South Africa)",
+      "Customer Service - Short Form",
+      "Customer Service with Sales - Short Form"
+    ],
+    "recommendations": [
+      "Entry Level Customer Service (General) Solution",
+      "Entry Level Customer Serv-Retail & Contact Center",
+      "Entry Level Customer Service 7.1 (International)",
+      "Entry Level Customer Service 7.1 (Americas)",
+      "Entry Level Customer Service 7.1 (South Africa)",
+      "Customer Service - Short Form",
+      "Customer Service - Short Form - UK",
+      "Contact Center Customer Service 8.0",
+      "Customer Service Phone Solution",
+      "Contact Center Customer Service + 8.0"
+    ],
+    "exact_matches": [
+      [
+        "Entry Level Customer Service 7.1 (International)",
+        "Entry Level Customer Service 7.1 (Americas)",
+        "exact"
+      ],
+      [
+        "Entry Level Customer Service 7.1 (Americas)",
+        "Entry Level Customer Service 7.1 (Americas)",
+        "exact"
+      ],
+      [
+        "Entry Level Customer Service 7.1 (South Africa)",
+        "Entry Level Customer Service 7.1 (Americas)",
+        "exact"
+      ],
+      [
+        "Customer Service - Short Form",
+        "Customer Service - Short Form",
+        "exact"
+      ]
+    ],
+    "near_matches": [
+      [
+        "Customer Service - Short Form - UK",
+        "Customer Service - Short Form",
+        "partial"
+      ]
+    ],
+    "recall": 1.0
+  }
+]
