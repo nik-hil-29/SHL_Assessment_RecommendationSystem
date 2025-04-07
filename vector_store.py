@@ -9,6 +9,13 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 load_dotenv()
 
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 # Attempt to use a compatible SQLite version
 try:
     import sqlite3
@@ -33,12 +40,7 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 if not GOOGLE_API_KEY:
     raise Exception("GOOGLE_API_KEY not found in environment variables. Please check your .env file.")
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+
 
 
 class AssessmentVectorStore:
