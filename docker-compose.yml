@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./FinalDataSource:/FinalDataSource
+      - ./chroma_db:/chroma_db
+      - ./evaluation:/evaluation
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - AGENTQL_API_KEY=${AGENTQL_API_KEY}
+      - PORT=8000
+    command: uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  streamlit:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./FinalDataSource:/FinalDataSource
+      - ./chroma_db:/chroma_db
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - AGENTQL_API_KEY=${AGENTQL_API_KEY}
+      - API_URL=http://api:8000
+      - PORT=8501
+    command: streamlit run streamlit_app.py
+    depends_on:
+      - api
+      
+  data-processor:
+    build: .
+    volumes:
+      - ./FinalDataSource:/FinalDataSource
+      - ./data_source:/data_source
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - AGENTQL_API_KEY=${AGENTQL_API_KEY}
+    command: python DataProcessor.py
+    profiles:
+      - data-processing
