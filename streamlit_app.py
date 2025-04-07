@@ -1,44 +1,71 @@
+# streamlit_app.py
 import streamlit as st
 import pandas as pd
-import requests
 import os
-import subprocess
-import time
-import threading
 import sys
 from dotenv import load_dotenv
+import google.generativeai as genai
+
+# Import the recommendation system directly
+from recommendation_system import SHLRecommendationSystem
 
 # Load environment variables
 load_dotenv()
 
-# Function to start API server in a separate thread
+# Configure Google API
+google_api_key = os.environ.get("GOOGLE_API_KEY")
+if google_api_key:
+    genai.configure(api_key=google_api_key)
+# In streamlit_app.py, replace the start_api_server function
 def start_api_server():
     try:
+        # On Streamlit Cloud, don't try to start the API server
+        if os.environ.get("IS_STREAMLIT_CLOUD") == "1":
+            return None
+            
+        # For local development only:
         # Determine the correct path to api_server.py
         api_server_path = os.path.join(os.path.dirname(__file__), 'api_server.py')
         
-        # Start the API server as a subprocess
+        # Find an available port
+        import socket
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind(('localhost', 0))
+        port = s.getsockname()[1]
+        s.close()
+        
+        # Set environment variable for the API to use
+        os.environ["PORT"] = str(port)
+        
+        # Start the API server as a subprocess with the dynamic port
         api_process = subprocess.Popen([sys.executable, api_server_path])
         
         # Wait a moment to ensure the server starts
         time.sleep(5)
+        
+        # Set the API URL to use the dynamic port
+        global API_URL
+        API_URL = f"http://localhost:{port}"
         
         return api_process
     except Exception as e:
         st.error(f"Failed to start API server: {e}")
         return None
 
-# Global variable to track API server process
-api_server_process = None
-
-# Ensure API server is started before Streamlit app renders
-def ensure_api_server():
-    global api_server_process
-    if api_server_process is None:
-        api_server_process = start_api_server()
-
-# Get API URL from environment or use default
-API_URL = os.getenv("API_URL", "http://localhost:8000")
+# Initialize recommendation system
+@st.cache_resource
+def get_recommendation_system():
+    try:
+        processed_data_path = "FinalDataSource/processed_assessments.json"
+        db_directory = "chroma_db"
+        recommendation_system = SHLRecommendationSystem(
+            processed_data_path=processed_data_path,
+            db_directory=db_directory
+        )
+        return recommendation_system
+    except Exception as e:
+        st.error(f"Failed to initialize recommendation system: {e}")
+        return None
 
 # Configure Streamlit page
 st.set_page_config(
@@ -47,9 +74,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-
-# Ensure API server is running
-ensure_api_server()
 
 # App title and description
 st.title("SHL Assessment Recommendation System")
@@ -91,36 +115,19 @@ with col1:
 
 # Display recommendations if query submitted
 if submit_button and query.strip():
-    with st.spinner("Analyzing your requirements..."):
-        try:
-            # Call the API
-            response = requests.get(
-                f"{API_URL}/recommend",
-                params={"query": query, "max_results": max_results},
-                timeout=30
-            )
-            
-            if response.status_code == 200:
-                data = response.json()
-                recommendations = data.get("recommendations", [])
+    # Get recommendation system
+    recommendation_system = get_recommendation_system()
+    
+    if recommendation_system:
+        with st.spinner("Analyzing your requirements..."):
+            try:
+                # Get recommendations directly
+                df = recommendation_system.get_recommendations(query, max_results=max_results)
                 
-                if not recommendations:
+                if df.empty or df.iloc[0]["Assessment Name"] == "No matching assessments found":
                     st.warning("No matching assessments found for your query.")
                 else:
-                    st.success(f"Found {len(recommendations)} relevant assessments:")
-                    
-                    # Convert to DataFrame for display
-                    df = pd.DataFrame(recommendations)
-                    
-                    # Rename columns for display
-                    df = df.rename(columns={
-                        'name': 'Assessment Name',
-                        'url': 'URL',
-                        'remote_testing': 'Remote Testing',
-                        'adaptive_support': 'Adaptive/IRT Support',
-                        'duration': 'Duration',
-                        'test_type': 'Test Type'
-                    })
+                    st.success(f"Found {len(df)} relevant assessments:")
                     
                     # Format URLs as clickable links
                     df['URL'] = df['URL'].apply(lambda x: f'<a href="{x}" target="_blank">{x}</a>' if x else '')
@@ -129,7 +136,10 @@ if submit_button and query.strip():
                     st.write(df.to_html(escape=False, index=False), unsafe_allow_html=True)
                     
                     # Download as CSV option
-                    csv = df.to_csv(index=False).encode('utf-8')
+                    csv_df = df.copy()
+                    # Remove HTML tags for CSV download
+                    csv_df['URL'] = csv_df['URL'].str.replace(r'<.*?>', '', regex=True)
+                    csv = csv_df.to_csv(index=False).encode('utf-8')
                     st.download_button(
                         "Download Results as CSV",
                         csv,
@@ -137,12 +147,12 @@ if submit_button and query.strip():
                         "text/csv",
                         key='download-csv'
                     )
-            else:
-                st.error(f"Error: {response.status_code} - {response.text}")
-                
-        except requests.exceptions.RequestException as e:
-            st.error(f"API Connection Error: {e}")
-            st.info("Ensure the API server is running and accessible.")
+            except Exception as e:
+                st.error(f"Error getting recommendations: {e}")
+                import traceback
+                st.error(traceback.format_exc())
+    else:
+        st.error("Recommendation system could not be initialized")
 else:
     if submit_button:
         st.warning("Please enter a query to get recommendations.")
@@ -152,13 +162,3 @@ else:
 # Footer
 st.markdown("---")
 st.markdown("Powered by AI and natural language processing")
-
-# Cleanup API server process when Streamlit app closes
-def cleanup():
-    global api_server_process
-    if api_server_process:
-        api_server_process.terminate()
-
-# Register cleanup function
-import atexit
-atexit.register(cleanup)
