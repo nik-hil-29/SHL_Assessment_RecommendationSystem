@@ -6,7 +6,8 @@ python-dotenv
 streamlit
 requests
 pandas
-numpy
+numpy==1.26.4
+
 
 # Vector storage and embedding
 chromadb==0.4.22
