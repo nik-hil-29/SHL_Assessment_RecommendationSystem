@@ -136,8 +136,8 @@ Project Maintainer: Nikhil Kushwha
 - Email: imnikhilkushwaha@gmail.com
   
 ## Wanna Try
-Streamlit Web-App Link : https://appapppy-v66hmrxddd5hmp35fry7fe.streamlit.app/
-Get API For JSON Query : https://shl-assessment-recommendationsystem.onrender.com/recommend?query=Java%20programming%20test%20under%2030%20minutes&max_results=5
+- Streamlit Web-App Link : https://appapppy-v66hmrxddd5hmp35fry7fe.streamlit.app/
+- Get API For JSON Query : https://shl-assessment-recommendationsystem.onrender.com/recommend?query=Java%20programming%20test%20under%2030%20minutes&max_results=5
 
 
 ## Acknowledgments
